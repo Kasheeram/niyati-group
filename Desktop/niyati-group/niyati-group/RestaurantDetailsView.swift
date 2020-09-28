@@ -25,6 +25,9 @@ struct RestaurantDetailsView: View {
             }
         }.listStyle(GroupedListStyle())
         .navigationBarTitle(Text("Menu"))
+        .navigationBarItems(trailing:
+            CustomNavButton()
+        )
         .onAppear {
             Webservices.shared.getGenericData(urlString: "restaurants/\(self.restaurant.id)") { (restaurantDtl: RestaurantDetails?) in
                     guard let restaurantDtl = restaurantDtl else { return }
@@ -35,12 +38,32 @@ struct RestaurantDetailsView: View {
     }
 }
 
+struct CustomNavButton: View {
+    @State var count = 0
+    var body: some View {
+        
+        ZStack {
+            Button(action: {
+                self.count += 1
+            }) {
+                Image("nounNotification_unselected").resizable().frame(width: 25, height: 25)
+                }
+            .foregroundColor(Color.black)
+                .clipShape(Circle())
+            if count != 0 {
+                Text("\(count)").font(.caption).padding(5).background(Color.red).clipShape(Circle()).foregroundColor(Color.white).offset(x: 10, y: -10)
+            }
+        }.animation(.spring())
+    }
+}
+
+
 struct ItemView: View {
     let item: Item
     
     var body: some View {
         HStack {
-            WebImage(url: URL(string:(baseUrl + item.logo))).resizable().placeholder(Image(systemName: "post_puppy")).indicator(.activity).frame(width: 50, height: 50, alignment: .center).clipped()
+            WebImage(url: URL(string:(baseUrl + item.logo))).resizable().placeholder(Image("burger")).indicator(.activity).frame(width: 50, height: 50, alignment: .center).clipped()
             VStack(alignment: .leading) {
                 Text(item.name)
                 Text(item.price.prices)

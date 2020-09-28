@@ -29,6 +29,7 @@ struct ContentView: View {
     }
 }
 
+
 struct PostView: View {
     let restaurant: Restaurant
     var body: some View {
