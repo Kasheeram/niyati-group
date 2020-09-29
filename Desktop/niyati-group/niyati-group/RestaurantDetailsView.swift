@@ -12,11 +12,12 @@ import SDWebImageSwiftUI
 struct RestaurantDetailsView: View {
     var restaurant: Restaurant
     
-    @State var menues: [Menu] = []
-    
+    @ObservedObject var menuVM = MenuListViewModel()
+    @State var isPresentingCardView = false
+
     var body: some View {
         List {
-            ForEach(menues) { menu in
+            ForEach(menuVM.menues) { menu in
                 Section(header: Text(menu.category).font(.headline)) {
                 ForEach(menu.items) { item in
                     ItemView(item: item)
@@ -26,13 +27,12 @@ struct RestaurantDetailsView: View {
         }.listStyle(GroupedListStyle())
         .navigationBarTitle(Text("Menu"))
         .navigationBarItems(trailing:
-            CustomNavButton()
+            NavigationLink(destination: CardView(), isActive: $isPresentingCardView) {
+                CustomNavButton(count: 4, isPresentingCardView: self.$isPresentingCardView)
+            }
         )
         .onAppear {
-            Webservices.shared.getGenericData(urlString: "restaurants/\(self.restaurant.id)") { (restaurantDtl: RestaurantDetails?) in
-                    guard let restaurantDtl = restaurantDtl else { return }
-                    self.menues = restaurantDtl.restaurant.menues
-                }
+            self.menuVM.fetchMenues(id: self.restaurant.id)
         }
         
     }
@@ -40,13 +40,14 @@ struct RestaurantDetailsView: View {
 
 struct CustomNavButton: View {
     @State var count = 0
+    @Binding var isPresentingCardView: Bool
+    
     var body: some View {
-        
         ZStack {
             Button(action: {
-                self.count += 1
+                self.isPresentingCardView.toggle()
             }) {
-                Image("nounNotification_unselected").resizable().frame(width: 25, height: 25)
+                Image("notification").resizable().frame(width: 25, height: 25)
                 }
             .foregroundColor(Color.black)
                 .clipShape(Circle())
@@ -77,21 +78,20 @@ struct ItemView: View {
                     .stroke(Color.blue, lineWidth: 1)
                 )
             }
-            
         }
     }
     
     func addToCard() {
-        print("Button clicked")
+        print("Add item to card")
     }
 }
 
 let restaurant = Restaurant(id: "12", name: "AFZAL CHICKEN", type: "NON VEG", summary: "sdkfjl sdlfkj sdfkfhk fsdkjf fsdkfjhk", logo: "post_puppy")
 
-struct RestaurantDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        RestaurantDetailsView(restaurant: restaurant)
-    }
-}
+//struct RestaurantDetailsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RestaurantDetailsView(restaurant: restaurant)
+//    }
+//}
 
 

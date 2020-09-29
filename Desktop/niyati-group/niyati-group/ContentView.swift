@@ -24,6 +24,7 @@ struct ContentView: View {
                     Webservices.shared.getGenericData(urlString: "restaurants") { (restaurants: [Restaurant]) in
                         self.restaurants = restaurants
                     }
+                   
             }
         }
     }
