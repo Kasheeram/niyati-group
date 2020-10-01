@@ -10,6 +10,6 @@ import Foundation
 import SwiftUI
 
 struct Restaurant: Decodable, Identifiable {
-    let id: String
-    let name, type, summary ,logo: String
+    let id: String?
+    let name, type, summary ,logo: String?
 }

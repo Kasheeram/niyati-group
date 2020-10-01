@@ -14,32 +14,37 @@ struct RestaurantDetailsView: View {
     
     @ObservedObject var menuVM = MenuListViewModel()
     @State var isPresentingCardView = false
-
+    
+    @State var numberOfCardItems = 0
+    
     var body: some View {
         List {
             ForEach(menuVM.menues) { menu in
                 Section(header: Text(menu.category).font(.headline)) {
-                ForEach(menu.items) { item in
-                    ItemView(item: item)
+                    ForEach(menu.items) { item in
+                        ItemView(item: item, numberOfCardItems: self.$numberOfCardItems)
+                    }
                 }
-               }
             }
         }.listStyle(GroupedListStyle())
-        .navigationBarTitle(Text("Menu"))
-        .navigationBarItems(trailing:
-            NavigationLink(destination: CardView(), isActive: $isPresentingCardView) {
-                CustomNavButton(count: 4, isPresentingCardView: self.$isPresentingCardView)
-            }
+            .navigationBarTitle(Text("Menu"))
+            .navigationBarItems(trailing:
+                NavigationLink(destination: CardView(), isActive: $isPresentingCardView) {
+                    CustomNavButton(numberOfCardItems: $numberOfCardItems, isPresentingCardView: self.$isPresentingCardView)
+                }
         )
         .onAppear {
-            self.menuVM.fetchMenues(id: self.restaurant.id)
+            if self.menuVM.menues.count < 1 {
+                guard let id = self.restaurant.id else { return }
+                self.menuVM.fetchMenues(id: id)
+            }
         }
         
     }
 }
 
 struct CustomNavButton: View {
-    @State var count = 0
+    @Binding var numberOfCardItems: Int
     @Binding var isPresentingCardView: Bool
     
     var body: some View {
@@ -47,12 +52,11 @@ struct CustomNavButton: View {
             Button(action: {
                 self.isPresentingCardView.toggle()
             }) {
-                Image("notification").resizable().frame(width: 25, height: 25)
-                }
+                Image("shopping-cart").resizable().frame(width: 25, height: 25)
+            }
             .foregroundColor(Color.black)
-                .clipShape(Circle())
-            if count != 0 {
-                Text("\(count)").font(.caption).padding(5).background(Color.red).clipShape(Circle()).foregroundColor(Color.white).offset(x: 10, y: -10)
+            if numberOfCardItems != 0 {
+                Text("\(numberOfCardItems)").font(.caption).padding(5).background(Color.red).clipShape(Circle()).foregroundColor(Color.white).offset(x: 10, y: -10)
             }
         }.animation(.spring())
     }
@@ -61,13 +65,13 @@ struct CustomNavButton: View {
 
 struct ItemView: View {
     let item: Item
-    
+    @Binding var numberOfCardItems: Int
     var body: some View {
         HStack {
             WebImage(url: URL(string:(baseUrl + item.logo))).resizable().placeholder(Image("burger")).indicator(.activity).frame(width: 50, height: 50, alignment: .center).clipped()
             VStack(alignment: .leading) {
                 Text(item.name)
-                Text(item.price.prices)
+                Text("\(item.quantity): ₹\(item.price)")
             }
             Spacer()
             Button(action: {
@@ -75,7 +79,7 @@ struct ItemView: View {
             }){
                 Text("Add +").frame(width: 80, height: 30).overlay(
                     RoundedRectangle(cornerRadius: 5)
-                    .stroke(Color.blue, lineWidth: 1)
+                        .stroke(Color.blue, lineWidth: 1)
                 )
             }
         }
@@ -83,6 +87,7 @@ struct ItemView: View {
     
     func addToCard() {
         print("Add item to card")
+        self.numberOfCardItems += 1
     }
 }
 

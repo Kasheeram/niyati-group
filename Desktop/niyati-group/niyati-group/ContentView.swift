@@ -12,19 +12,35 @@ import SDWebImageSwiftUI
 struct ContentView: View {
     
     @State var restaurants: [Restaurant] = []
-
+    
+    init() {
+        // To remove only extra separators below the list:
+        // UITableView.appearance().tableFooterView = UIView()
+        
+        // To remove all separators including the actual ones:
+        UITableView.appearance().separatorStyle = .none
+        
+        // To set cell background color
+        // UITableViewCell.appearance().backgroundColor = .gray
+        UITableViewCell.appearance().selectionStyle = .none
+    }
+    
     var body: some View {
         NavigationView {
             List(restaurants) { restaurant in
-                NavigationLink(destination: RestaurantDetailsView(restaurant: restaurant)) {
+                ZStack {
                     PostView(restaurant: restaurant)
-                }
-            }.navigationBarTitle(Text("Restaurants"))
-                .onAppear {
-                    Webservices.shared.getGenericData(urlString: "restaurants") { (restaurants: [Restaurant]) in
-                        self.restaurants = restaurants
+                    NavigationLink(destination: RestaurantDetailsView(restaurant: restaurant)) {
+                        EmptyView() // All this drama has been done to remove right arrow
                     }
-                   
+                }
+            }
+            .navigationBarTitle(Text(NavTitles.restaurants))
+            .onAppear {
+                Webservices.shared.getGenericData(urlString: AppUrls.restaurantsList) { (restaurants: [Restaurant]) in
+                    self.restaurants = restaurants
+                }
+                
             }
         }
     }
@@ -32,18 +48,35 @@ struct ContentView: View {
 
 
 struct PostView: View {
-    let restaurant: Restaurant
+    let restaurant: Restaurant?
     var body: some View {
-        VStack (alignment: .leading){
-            VStack(alignment: .leading, spacing: 4) {
-                Text(restaurant.name).font(.headline)
-                Text(restaurant.summary).lineLimit(nil).padding(.trailing, 10).fixedSize(horizontal: false, vertical: true)
-            }.padding(.leading, 10).padding(.top, 4)
-            WebImage(url: URL(string: baseUrl + restaurant.logo))
-            .resizable()
-                .frame(width: UIScreen.main.bounds.width, height: 150).clipped()
-        }.padding(.leading, -20).padding(.bottom, -8)
+        VStack {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(restaurant?.name ?? "").font(.headline)
+                    Text(restaurant?.summary ?? "").lineLimit(nil).fixedSize(horizontal: false, vertical: true)
+                }
+                .layoutPriority(100)
+                Spacer()
+            }.padding([.top, .leading])
+            
+            WebImage(url: URL(string: baseUrl + (restaurant?.logo ?? "")!))
+                .resizable().frame(height: 150, alignment: .center).clipped()
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .background(Color.white.opacity(1.0))
+        .modifier(CardModifier())
+        .padding(.top, 20)
     }
+}
+
+struct CardModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .cornerRadius(10)
+            .shadow(color: Color.gray.opacity(0.2), radius: 10, x: 0, y: 0)
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

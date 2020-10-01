@@ -10,6 +10,15 @@ import Foundation
 
 let baseUrl = "http://localhost:3000/"
 
+struct AppUrls {
+    static let restaurantsList = "restaurants"
+}
+
+struct NavTitles {
+    static let restaurants = "Restaurants"
+}
+
+
 struct Webservices {
     
     static let shared = Webservices()
