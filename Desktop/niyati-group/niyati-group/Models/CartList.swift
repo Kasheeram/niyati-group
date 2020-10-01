@@ -10,7 +10,7 @@ import Foundation
 
 
 struct CartList: Decodable  {
-    let message: String
+    let message: String?
     let count: Int
     let carts: [Cart]
 }

@@ -32,12 +32,14 @@ struct Webservices {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else { return }
             do {
-            let posts = try JSONDecoder().decode(T.self, from: data)
-            DispatchQueue.main.async {
-                completion(posts)
-            }
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let posts = try decoder.decode(T.self, from: data)
+                DispatchQueue.main.async {
+                    completion(posts)
+                }
             }catch(let err) {
-               print(err)
+                print(err)
             }
         }.resume()
     }

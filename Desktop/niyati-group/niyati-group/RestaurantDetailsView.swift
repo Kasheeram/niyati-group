@@ -20,8 +20,8 @@ struct RestaurantDetailsView: View {
     var body: some View {
         List {
             ForEach(menuVM.menues) { menu in
-                Section(header: Text(menu.category).font(.headline)) {
-                    ForEach(menu.items) { item in
+                Section(header: Text(menu.category ?? "").font(.headline)) {
+                    ForEach(menu.items ?? []) { item in
                         ItemView(item: item, numberOfCardItems: self.$numberOfCardItems)
                     }
                 }
@@ -68,10 +68,10 @@ struct ItemView: View {
     @Binding var numberOfCardItems: Int
     var body: some View {
         HStack {
-            WebImage(url: URL(string:(baseUrl + item.logo))).resizable().placeholder(Image("burger")).indicator(.activity).frame(width: 50, height: 50, alignment: .center).clipped()
+            WebImage(url: URL(string:(baseUrl + (item.logo ?? "")!))).resizable().placeholder(Image("burger")).indicator(.activity).frame(width: 50, height: 50, alignment: .center).clipped()
             VStack(alignment: .leading) {
-                Text(item.name)
-                Text("\(item.quantity): ₹\(item.price)")
+                Text(item.name ?? "")
+                Text("\(item.quantity ?? ""): ₹\(item.price ?? 0)")
             }
             Spacer()
             Button(action: {
@@ -91,7 +91,7 @@ struct ItemView: View {
     }
 }
 
-let restaurant = Restaurant(id: "12", name: "AFZAL CHICKEN", type: "NON VEG", summary: "sdkfjl sdlfkj sdfkfhk fsdkjf fsdkfjhk", logo: "post_puppy")
+//let restaurant = Restaurant(id: "12", name: "AFZAL CHICKEN", type: "NON VEG", summaryDetails: "sdkfjl sdlfkj sdfkfhk fsdkjf fsdkfjhk", logo: "post_puppy")
 
 //struct RestaurantDetailsView_Previews: PreviewProvider {
 //    static var previews: some View {

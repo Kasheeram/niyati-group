@@ -39,6 +39,7 @@ struct ContentView: View {
             .onAppear {
                 Webservices.shared.getGenericData(urlString: AppUrls.restaurantsList) { (restaurants: [Restaurant]) in
                     self.restaurants = restaurants
+                    print(restaurants[0].summaryDetails)
                 }
                 
             }
@@ -54,7 +55,7 @@ struct PostView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text(restaurant?.name ?? "").font(.headline)
-                    Text(restaurant?.summary ?? "").lineLimit(nil).fixedSize(horizontal: false, vertical: true)
+                    Text(restaurant?.summaryDetails ?? "").lineLimit(nil).fixedSize(horizontal: false, vertical: true)
                 }
                 .layoutPriority(100)
                 Spacer()

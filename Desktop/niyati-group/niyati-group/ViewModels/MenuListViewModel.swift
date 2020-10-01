@@ -18,7 +18,7 @@ final class MenuListViewModel: ObservableObject {
     func fetchMenues(id: String) {
         Webservices.shared.getGenericData(urlString: "restaurants/\(id)") { (restaurantDtl: RestaurantDetails?) in
             guard let restaurantDtl = restaurantDtl else { return }
-            self.menues = restaurantDtl.restaurant.menues
+            self.menues = restaurantDtl.restaurant?.menues ?? []
         }
     }
     

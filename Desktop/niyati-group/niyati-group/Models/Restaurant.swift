@@ -11,5 +11,5 @@ import SwiftUI
 
 struct Restaurant: Decodable, Identifiable {
     let id: String?
-    let name, type, summary ,logo: String?
+    let name, type, summaryDetails ,logo: String?
 }

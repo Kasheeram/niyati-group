@@ -176,8 +176,8 @@
 			isa = PBXGroup;
 			children = (
 				712FB68E251C6A8900BBB65E /* Restaurant.swift */,
-				7132995E252064A1000AD759 /* CartList.swift */,
 				7132996025206535000AD759 /* RestaurantDetails.swift */,
+				7132995E252064A1000AD759 /* CartList.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

@@ -10,23 +10,23 @@ import Foundation
 
 
 struct RestaurantDetails: Decodable  {
-    let restaurant: RestaurnatDtl
+    let restaurant: RestaurnatDtl?
 }
 
 struct RestaurnatDtl: Decodable, Identifiable {
-    let id: String
-    let name, type, logo: String
-    let menues: [Menu]
+    let id: String?
+    let name, type, logo: String?
+    let menues: [Menu]?
 }
 
 struct Menu: Decodable, Identifiable {
-    let id: String
-    let category, logo, banner: String
-    let items: [Item]
+    let id: String?
+    let category, logo, banner: String?
+    let items: [Item]?
 }
 
 struct Item: Decodable, Identifiable {
-    let id: String
-    let name, quantity, logo, banner: String
-    let price: Int
+    let id: String?
+    let name, quantity, logo, banner: String?
+    let price: Int?
 }
