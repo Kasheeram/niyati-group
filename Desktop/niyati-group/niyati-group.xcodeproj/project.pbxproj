@@ -17,6 +17,7 @@
 		711A8B6B251603D2001C623A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 711A8B69251603D2001C623A /* LaunchScreen.storyboard */; };
 		711A8B76251603D2001C623A /* niyati_groupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711A8B75251603D2001C623A /* niyati_groupTests.swift */; };
 		711A8B81251603D2001C623A /* niyati_groupUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711A8B80251603D2001C623A /* niyati_groupUITests.swift */; };
+		711EF784252713A700B2E0BF /* StatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711EF783252713A700B2E0BF /* StatusCode.swift */; };
 		712FB68D251C6A5A00BBB65E /* WebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712FB68C251C6A5A00BBB65E /* WebServices.swift */; };
 		712FB68F251C6A8900BBB65E /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712FB68E251C6A8900BBB65E /* Restaurant.swift */; };
 		7132995F252064A1000AD759 /* CartList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7132995E252064A1000AD759 /* CartList.swift */; };
@@ -61,6 +62,7 @@
 		711A8B7C251603D2001C623A /* niyati-groupUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "niyati-groupUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		711A8B80251603D2001C623A /* niyati_groupUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = niyati_groupUITests.swift; sourceTree = "<group>"; };
 		711A8B82251603D2001C623A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		711EF783252713A700B2E0BF /* StatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCode.swift; sourceTree = "<group>"; };
 		712FB68C251C6A5A00BBB65E /* WebServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServices.swift; sourceTree = "<group>"; };
 		712FB68E251C6A8900BBB65E /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		7132995E252064A1000AD759 /* CartList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartList.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				712FB68E251C6A8900BBB65E /* Restaurant.swift */,
 				7132996025206535000AD759 /* RestaurantDetails.swift */,
 				7132995E252064A1000AD759 /* CartList.swift */,
+				711EF783252713A700B2E0BF /* StatusCode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 			files = (
 				71D62D4D2517B9DE0088A303 /* RestaurantDetailsView.swift in Sources */,
 				710538132522099C00188E2E /* CardView.swift in Sources */,
+				711EF784252713A700B2E0BF /* StatusCode.swift in Sources */,
 				7132996125206535000AD759 /* RestaurantDetails.swift in Sources */,
 				712FB68D251C6A5A00BBB65E /* WebServices.swift in Sources */,
 				7132995F252064A1000AD759 /* CartList.swift in Sources */,

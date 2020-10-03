@@ -39,7 +39,6 @@ struct ContentView: View {
             .onAppear {
                 Webservices.shared.getGenericData(urlString: AppUrls.restaurantsList) { (restaurants: [Restaurant]) in
                     self.restaurants = restaurants
-                    print(restaurants[0].summaryDetails)
                 }
                 
             }

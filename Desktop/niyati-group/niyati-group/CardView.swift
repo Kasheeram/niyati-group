@@ -23,7 +23,7 @@ struct CardView: View {
                 }
             }.listStyle(GroupedListStyle())
             Button(action: {
-                print("Do something on click of order now button")
+                self.placeOrder(items: self.cartListVM.cartList)
             }) {
                 Text("Order Now").frame(minWidth: 0, maxWidth: 300)
                     .padding()
@@ -40,6 +40,38 @@ struct CardView: View {
             }
         }
     }
+    
+    func placeOrder(items: [Cart]) {
+        let items = items
+        var totalTtems = 0
+        var grandTotal = 0
+        var itemsDic = [[String: AnyObject]]()
+        for item in items {
+            let cost = item.quantity * item.price
+            var locDic = [String: AnyObject]()
+            locDic["itemId"] = item.id as AnyObject
+            locDic["quantity"] = item.quantity as AnyObject
+            locDic["cost"] = cost as AnyObject
+            totalTtems += item.quantity
+            grandTotal += cost
+            itemsDic.append(locDic)
+        }
+        
+        let params = ["items": itemsDic, "total_items": totalTtems, "grand_total": grandTotal] as [String : AnyObject]
+        
+        let url = "orders/5f71aded1110e60bbeac7973"
+        Webservices.shared.postGenericData(urlString: url, params: params) { (res: Swift.Result<statusCode, Error>)  in
+            // stopProgressActivity()
+            switch res {
+            case .success(let checkStatus):
+                print(checkStatus.status as Any)
+            case .failure(let err):
+                print(err)
+                // self.handleFailureControl(err: err)
+            }
+        }
+    }
+    
 }
 
 struct FooterView: View {

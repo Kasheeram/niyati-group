@@ -7,5 +7,6 @@ target 'niyati-group' do
 
   # Pods for niyati-group
 	pod 'SDWebImageSwiftUI'
+	pod 'Alamofire'
 
 end

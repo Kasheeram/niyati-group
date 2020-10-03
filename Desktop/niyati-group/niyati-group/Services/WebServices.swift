@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 let baseUrl = "http://localhost:3000/"
 
@@ -43,4 +44,31 @@ struct Webservices {
             }
         }.resume()
     }
+    
+    func postGenericData<T: Decodable>(urlString: String, params: [String: AnyObject], completion: @escaping (Swift.Result<T, Error>) -> ()) {
+        guard let url = URL(string: baseUrl + urlString) else { return }
+        
+        AF.request(url, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON {
+            response in
+            
+            switch response.result {
+            case .success:
+                do {
+                    guard let data = response.data else { return }
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let decodedData = try decoder.decode(T.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(decodedData))
+                    }
+                }catch let jsonError{
+                    completion(.failure(jsonError))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    
 }

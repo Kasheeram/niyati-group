@@ -86,8 +86,20 @@ struct ItemView: View {
     }
     
     func addToCard() {
-        print("Add item to card")
         self.numberOfCardItems += 1
+        let params = ["itemId": item.id!] as [String: AnyObject]
+        print(params)
+        let url = "carts/5f71aded1110e60bbeac7973"
+        Webservices.shared.postGenericData(urlString: url, params: params) { (res: Swift.Result<statusCode, Error>)  in
+            // stopProgressActivity()
+            switch res {
+            case .success(let checkStatus):
+                print(checkStatus.status as Any)
+            case .failure(let err):
+                print(err)
+                // self.handleFailureControl(err: err)
+            }
+        }
     }
 }
 
