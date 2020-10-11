@@ -26,7 +26,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
+//        NavigationView {
             List(restaurants) { restaurant in
                 ZStack {
                     PostView(restaurant: restaurant)
@@ -42,7 +42,7 @@ struct ContentView: View {
                 }
                 
             }
-        }
+//        }
     }
 }
 
