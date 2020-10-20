@@ -137,16 +137,13 @@
 				7171971625230AAE00A3AC2E /* ViewModels */,
 				7132995D25206459000AD759 /* Services */,
 				7132995C25206444000AD759 /* Models */,
+				71DCC9A125330B8700D78459 /* Controllers */,
 				711A8B5E251603CE001C623A /* AppDelegate.swift */,
 				711A8B60251603CE001C623A /* SceneDelegate.swift */,
-				711A8B62251603CE001C623A /* ContentView.swift */,
-				71D62D4C2517B9DE0088A303 /* RestaurantDetailsView.swift */,
-				710538122522099C00188E2E /* CardView.swift */,
 				711A8B64251603D2001C623A /* Assets.xcassets */,
 				711A8B69251603D2001C623A /* LaunchScreen.storyboard */,
 				711A8B6C251603D2001C623A /* Info.plist */,
 				711A8B66251603D2001C623A /* Preview Content */,
-				715F529C252B213100FC36D4 /* LoginView.swift */,
 			);
 			path = "niyati-group";
 			sourceTree = "<group>";
@@ -203,6 +200,17 @@
 				71719719252341E000A3AC2E /* CartListViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		71DCC9A125330B8700D78459 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				715F529C252B213100FC36D4 /* LoginView.swift */,
+				711A8B62251603CE001C623A /* ContentView.swift */,
+				71D62D4C2517B9DE0088A303 /* RestaurantDetailsView.swift */,
+				710538122522099C00188E2E /* CardView.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		914C5818BFB0ED249CDADB23 /* Pods */ = {

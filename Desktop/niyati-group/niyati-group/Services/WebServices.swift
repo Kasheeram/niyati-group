@@ -47,10 +47,8 @@ struct Webservices {
     
     func postGenericData<T: Decodable>(urlString: String, params: [String: AnyObject], completion: @escaping (Swift.Result<T, Error>) -> ()) {
         guard let url = URL(string: baseUrl + urlString) else { return }
-        
         AF.request(url, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON {
             response in
-            
             switch response.result {
             case .success:
                 do {

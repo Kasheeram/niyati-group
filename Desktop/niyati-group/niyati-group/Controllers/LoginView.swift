@@ -160,8 +160,7 @@ struct Login: View {
             NavigationLink(destination: ContentView(),
                            isActive: $isActive) {
                     Button(action: {
-                        self.isActive = true
-                        print("do someting")
+                        self.verifyLoginCredentialsAndMoveToDashboard()
                     }) {
                         Text("LOGIN")
                             .foregroundColor(.white)
@@ -176,24 +175,29 @@ struct Login: View {
                     .padding(.bottom, -40)
                     .shadow(radius: 15)
             }
-            
-//            Button(action: {
-//
-//            }) {
-//                Text("LOGIN")
-//                    .foregroundColor(.white)
-//                    .fontWeight(.bold)
-//                    .padding(.vertical)
-//                    .frame(width: UIScreen.main.bounds.width - 100)
-//            }.background(
-//                LinearGradient(gradient: .init(colors: [Color("Color2"), Color("Color1"), Color("Color")]), startPoint: .leading, endPoint: .trailing)
-//            )
-//            .cornerRadius(8)
-//            .offset(y: -40)
-//            .padding(.bottom, -40)
-//            .shadow(radius: 15)
         }
     }
+    
+    func verifyLoginCredentialsAndMoveToDashboard() {
+        if mail != ""  &&  pass != "" {
+            let url = "users/login"
+            let params = ["email": mail, "password": pass] as [String : AnyObject]
+            Webservices.shared.postGenericData(urlString: url, params: params) { (res: Swift.Result<UserDetail, Error>)  in
+                switch res {
+                case .success(let user):
+                    NiyatiApp.shared.saveAppDetails(user: user)
+                    self.isActive = true
+                case .failure(let err):
+                    print(err)
+                }
+            }
+        } else {
+            print("Please enter the email and password")
+        }
+    
+        
+    }
+    
 }
 
 struct SignUp: View {
